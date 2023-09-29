@@ -83,4 +83,6 @@ jobs:
         with:
           context: . # Dockerfile is in root folder of context
           push: true
-          tags: ghcr.io/${{github.repository}}:${{github.ref_name}}
+          tags: ghcr.io/${{github.actor}}/${{github.repository}}:${{github.ref_name}}
+
+          # ghcr.io/octocat/my-repo:latest
