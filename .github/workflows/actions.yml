@@ -1,10 +1,15 @@
 
-name: run-all-tests
-on:
-  pull_request:
-    branches:
-      - main
-      - master
+name: run-all-tests & build image
+on: [push]
+
+env:
+# Defines three custom environment variables for the workflow.
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+  # The short ref name of the branch or tag that triggered the workflow run.
+  # This value matches the branch or tag name shown on GitHub. For example, feature-branch-1.
+  BRANCH_NAME: ${{ github.ref_name }}
+
 jobs:
   test-application:
     name: Unit-Integration-Test
@@ -19,8 +24,67 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-      - name: Chmod
+      # Give wrapper rw rights
+      - name: Chmod gradle wrapper
         run: chmod +x ./gradlew
 
-      - name: Build & Run Gradle test
-        run: ./gradlew clean test
+      # Build With Gradle Action
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+        with:
+          arguments: test
+
+  build-and-push-application:
+    name: build-and-push-application
+    runs-on: ubuntu-latest
+    # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
+    permissions:
+      contents: read
+      packages: write
+    # måste klara testerna först innan vi kan bygga applikationen
+    needs: test-application
+    steps:
+      - name: Check for GITHUB_TOKEN
+        run: |
+          if [ -z "${{ secrets.GRUPPUPPGIFT_3_SECRET }}" ]; then
+            echo "You must provide an GITHUB_TOKEN secret."
+            exit 1
+          fi
+
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Set up Java 17
+      - name: Set up Java 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '17'
+
+      # Give wrapper rw rights
+      - name: Chmod gradle wrapper
+        run: chmod +x ./gradlew
+
+      # Build With Gradle Action
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+        with:
+          arguments: build
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GRUPPUPPGIFT_3_SECRET }}
+
+      - name: Build and push From DockerFile
+        uses: docker/build-push-action@v5
+        with:
+          context: . # Dockerfile is in root folder of context
+          push: true
+          tags: ghcr.io/${{github.repository}}:${{github.ref_name}}
+
+          # tags: ghcr.io/${{github.repository}}/my-image:${{github.ref_name}}
+
+          # ghcr.io/octocat/my-repo:latest
