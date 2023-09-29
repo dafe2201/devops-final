@@ -14,10 +14,6 @@ jobs:
   test-application:
     name: Unit-Integration-Test
     runs-on: ubuntu-latest
-    # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
-    permissions:
-      contents: read
-      packages: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -28,8 +24,8 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-#      - name: Chmod
-#        run: chmod +x ./gradlew
+      - name: Chmod
+        run: chmod +x ./gradlew
 
       - name: Build & Run Gradle test
         run: ./gradlew clean test
