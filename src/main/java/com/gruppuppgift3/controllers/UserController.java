@@ -2,7 +2,6 @@ package com.gruppuppgift3.controllers;
 
 
 import com.gruppuppgift3.domain.User;
-import com.gruppuppgift3.impl.UserServiceImpl;
 import com.gruppuppgift3.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

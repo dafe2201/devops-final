@@ -9,18 +9,17 @@ import java.util.List;
 @Component
 public class UserRepository {
 
-    private static final List<User> users = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
 
-    static {
 
+    public UserRepository() {
         users.add(new User("Andreas", "999999-9999"));
         users.add(new User("Alex", "888888-8888"));
         users.add(new User("Oscar", "777777-7777"));
         users.add(new User("Daniel", "666666-6666"));
-
     }
 
-    public static List<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
