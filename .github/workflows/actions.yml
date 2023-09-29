@@ -1,4 +1,3 @@
-#Hello from other branch
 
 name: run-all-tests
 on:
@@ -20,7 +19,8 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-      - name: Setup Gradle & Test Application
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: test
+      - name: Chmod
+        run: chmod +x ./gradlew
+
+      - name: Build & Run Gradle test
+        run: ./gradlew clean test
