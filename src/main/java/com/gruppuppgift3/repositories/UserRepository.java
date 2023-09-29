@@ -1,13 +1,15 @@
 package com.gruppuppgift3.repositories;
 
 import com.gruppuppgift3.domain.User;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Repository {
+@Component
+public class UserRepository {
 
-    private static List<User> users = new ArrayList<>();
+    private static final List<User> users = new ArrayList<>();
 
     static {
 
