@@ -81,6 +81,6 @@ jobs:
       - name: Build and push From DockerFile
         uses: docker/build-push-action@v5
         with:
-          context: . # DockerFile is in root folder of context
+          context: . # Dockerfile is in root folder of context
           push: true
           tags: ghcr.io/${{github.repository}}:${{github.ref_name}}
