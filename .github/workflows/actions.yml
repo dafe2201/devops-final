@@ -85,6 +85,12 @@ jobs:
           push: true
           tags: ghcr.io/${{github.repository}}:${{github.ref_name}}
 
-          # tags: ghcr.io/${{github.repository}}/my-image:${{github.ref_name}}
+# Fake Deploy (CD)
+  fake-deploy:
+    name: Fake Deploy Application
+    needs: build-and-push-application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Image Name From GHCR Registry
+        run: echo "${{env.REGISTRY}}/${{env.IMAGE_NAME}}:${{env.BRANCH_NAME}}"
 
-          # ghcr.io/octocat/my-repo:latest
