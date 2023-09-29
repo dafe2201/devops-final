@@ -1,6 +1,9 @@
 
 name: run-all-tests & build image
-on: [push]
+on:
+  pull_request:
+    branches:
+      - master
 
 env:
 # Defines three custom environment variables for the workflow.
@@ -8,7 +11,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   # The short ref name of the branch or tag that triggered the workflow run.
   # This value matches the branch or tag name shown on GitHub. For example, feature-branch-1.
-  BRANCH_NAME: ${{ github.ref_name }}
+  BRANCH_NAME: ${{github.base_ref}}
 
 jobs:
   # HÄR TESTAR VI APPLICATION (CI)
