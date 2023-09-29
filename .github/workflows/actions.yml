@@ -11,7 +11,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   # The short ref name of the branch or tag that triggered the workflow run.
   # This value matches the branch or tag name shown on GitHub. For example, feature-branch-1.
-  BRANCH_NAME: ${{github.base_ref}}
+  BRANCH_NAME: ${{ github.base_ref }}
 
 jobs:
   # HÄR TESTAR VI APPLICATION (CI)
