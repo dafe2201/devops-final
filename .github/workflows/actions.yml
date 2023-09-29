@@ -47,8 +47,8 @@ jobs:
       - name: Check for GITHUB_TOKEN
         run: |
           if [ -z "${{ secrets.GRUPPUPPGIFT_3_SECRET }}" ]; then
-              echo "You must provide an GITHUB_TOKEN secret.
-              exit 1
+            echo "You must provide an GITHUB_TOKEN secret."
+            exit 1
           fi
 
       - name: Checkout Repository
