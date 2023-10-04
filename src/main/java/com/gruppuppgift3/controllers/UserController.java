@@ -25,7 +25,4 @@ public class UserController {
         return userService.fetchAllUsers();
     }
 
-
-    // This is a comment
-
 }
