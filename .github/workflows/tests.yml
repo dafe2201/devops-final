@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-application:
-    name: Unit-Integration-Test
+    name: tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
