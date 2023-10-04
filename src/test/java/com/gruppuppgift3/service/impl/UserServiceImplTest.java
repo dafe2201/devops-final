@@ -40,21 +40,4 @@ public class UserServiceImplTest {
         assertThat(result).isEqualTo(users);
     }
 
-    @Test
-    public void fetchAllUsersTestFailing(){
-        //Given
-        List<User> users = new ArrayList<>();
-        users.add(new User("Andreas", "999999-9999"));
-        users.add(new User("Alex", "888888-8888"));
-        users.add(new User("Oscar", "777777-7777"));
-        users.add(new User("Daniel", "666666-6666"));
-        //When
-        when(userRepository.getUsers()).thenReturn(users);
-
-        List<User> result = userServiceImpl.fetchAllUsers();
-
-        //Then
-        assertThat(result).isNotEqualTo(users);
-    }
-
 }
