@@ -1,6 +1,9 @@
 
 name: run-all-tests & build image
 on:
+  push:
+    branches-ignore:
+      - master
   pull_request:
     branches:
       - master
@@ -41,6 +44,7 @@ jobs:
 # HÄR BYGGER VI IMG OCH SKICKAR UPP TILL GHCR REGISTRY
   build-and-push-application:
     name: build-and-push-application
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
@@ -93,6 +97,7 @@ jobs:
 # Fake Deploy (CD)
   fake-deploy:
     name: Fake Deploy Application
+    if: github.event_name == 'pull_request'
     needs: build-and-push-application
     runs-on: ubuntu-latest
     steps:
